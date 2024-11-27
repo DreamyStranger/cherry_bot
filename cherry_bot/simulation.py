@@ -1,8 +1,9 @@
 import pygame
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import PoseStamped, QuaternionStamped, PointStamped
-from math import atan2, sin, cos, pi
+from geometry_msgs.msg import PoseStamped, PointStamped
+from math import atan2
+from .Environment.Environment import Environment
 
 class PygameVisualizer(Node):
     def __init__(self):
@@ -12,12 +13,9 @@ class PygameVisualizer(Node):
         self.width = 800
         self.height = 600
         self.scale = 100  # Scale ROS coordinates to pixels
-        self.robot_radius = 10
 
-        # Robot state
-        self.true_pose = None  # (x, y, theta) for true pose
-        self.goal_pose = None  # (x, y) for goal position
-        self.ekf_pose = None  # (x, y, theta) for EKF pose
+        # Set up Environment dimensions (using the static class)
+        Environment.set_dimensions(self.width // self.scale, self.height // self.scale, self.scale)
 
         # ROS topic subscriptions
         self.init_subscribers()
@@ -38,20 +36,15 @@ class PygameVisualizer(Node):
         """Update the robot's true position and orientation."""
         x = self.width // 2 + int(msg.pose.position.x * self.scale)
         y = self.height // 2 - int(msg.pose.position.y * self.scale)
-
-        # Extract theta from quaternion
-        qz = msg.pose.orientation.z
-        qw = msg.pose.orientation.w
-        theta = 2 * atan2(qz, qw)
-
-        self.true_pose = (x, y, theta)
+        Environment.update_true_pose(x, y)
 
     def goal_pose_callback(self, msg):
         """Update the goal position."""
-        self.goal_pose = (
+        goal= (
             self.width // 2 + int(msg.point.x * self.scale),
             self.height // 2 - int(msg.point.y * self.scale)
         )
+        Environment.update_goal(goal)
 
     def ekf_pose_callback(self, msg):
         """Update the robot's estimated position from EKF."""
@@ -59,29 +52,15 @@ class PygameVisualizer(Node):
         x = self.width // 2 + int(msg.pose.position.x * self.scale)
         y = self.height // 2 - int(msg.pose.position.y * self.scale)
 
-        # Extract theta from quaternion
-        qz = msg.pose.orientation.z
-        qw = msg.pose.orientation.w
-        theta = 2 * atan2(qz, qw)
-
-        self.ekf_pose = (x, y, theta)
+        Environment.update_ekf_pose(x, y)
 
     def render(self):
         """Render the scene."""
         # Clear the screen
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((255, 255, 255))
 
-        # Draw the goal position (green circle)
-        if self.goal_pose:
-            pygame.draw.circle(self.screen, (0, 255, 0), self.goal_pose, self.robot_radius//3)
-
-        # Draw the true pose (blue circle)
-        if self.true_pose:
-            pygame.draw.circle(self.screen, (0, 0, 255), self.true_pose[:2], self.robot_radius)
-
-        # Draw the EKF pose (purple circle)
-        if self.ekf_pose:
-            pygame.draw.circle(self.screen, (128, 0, 128), self.ekf_pose[:2], self.robot_radius)
+        # Render the environment
+        Environment.render(self.screen)
 
         # Update the display
         pygame.display.flip()

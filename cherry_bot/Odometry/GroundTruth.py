@@ -6,7 +6,7 @@ import math
 
 class TruePose(Node):
     def __init__(self):
-        super().__init__('true_pose')
+        super().__init__('grount_truth')
         
         # Publisher for ground truth pose (PoseStamped)
         self.publisher = self.create_publisher(PoseStamped, 'true_pose', 10)

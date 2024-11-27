@@ -5,7 +5,7 @@ def generate_launch_description():
     true_pose = Node(
         package="cherry_bot",          # Name of package
         executable="true_pose",        # Name of executable (defined in setup.py)
-        name="true_pose",              # Optional: ROS node name override
+        name="ground_truth",              # Optional: ROS node name override
     )
 
     noisy_pose = Node(
