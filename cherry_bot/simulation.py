@@ -1,21 +1,22 @@
 import pygame
+
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, PointStamped
-from math import atan2
+from sensor_msgs.msg import LaserScan
+from message_filters import Subscriber, ApproximateTimeSynchronizer
+
 from .Environment.Environment import Environment
+from .Environment.Renderer import Renderer
+from math import atan2
 
 class PygameVisualizer(Node):
     def __init__(self):
         super().__init__('pygame_visualizer')
 
         # Visualization settings
-        self.width = 800
-        self.height = 600
-        self.scale = 100  # Scale ROS coordinates to pixels
-
-        # Set up Environment dimensions (using the static class)
-        Environment.set_dimensions(self.width // self.scale, self.height // self.scale, self.scale)
+        self.width = Environment.width * Environment.scale
+        self.height = Environment.height * Environment.scale
 
         # ROS topic subscriptions
         self.init_subscribers()
@@ -27,41 +28,57 @@ class PygameVisualizer(Node):
         self.clock = pygame.time.Clock()
 
     def init_subscribers(self):
-        """Initialize all ROS subscribers."""
-        self.create_subscription(PoseStamped, 'true_pose', self.true_pose_callback, 10)
-        self.create_subscription(PoseStamped, 'ekf_pose', self.ekf_pose_callback, 10)
+        """Initialize all ROS subscribers with synchronization."""
+        # Subscribers for message filters
+        self.true_pose_sub = Subscriber(self, PoseStamped, 'true_pose')
+        self.ekf_pose_sub = Subscriber(self, PoseStamped, 'ekf_pose')
+        self.lidar_sub = Subscriber(self, LaserScan, 'lidar_scan')
+
+        # Synchronize topics
+        self.sync = ApproximateTimeSynchronizer(
+            [self.true_pose_sub, self.ekf_pose_sub, self.lidar_sub], 
+            queue_size=10, 
+            slop=0.01  # Allow a small time difference
+        )
+        self.sync.registerCallback(self.synchronized_callback)
+
+        # Separate subscriber for goal
         self.create_subscription(PointStamped, 'goals', self.goal_pose_callback, 10)
 
-    def true_pose_callback(self, msg):
-        """Update the robot's true position and orientation."""
-        x = self.width // 2 + int(msg.pose.position.x * self.scale)
-        y = self.height // 2 - int(msg.pose.position.y * self.scale)
-        Environment.update_true_pose(x, y)
+    def synchronized_callback(self, true_pose_msg, ekf_pose_msg, lidar_msg):
+        """Handle synchronized true_pose, ekf_pose, and lidar_scan messages."""
+        # Process true_pose
+        x_true = true_pose_msg.pose.position.x
+        y_true = true_pose_msg.pose.position.y
+        theta_true = 2 * atan2(true_pose_msg.pose.orientation.z, true_pose_msg.pose.orientation.w)
+        true_pose = (x_true, y_true, theta_true)
+        Environment.update_true_pose(true_pose)
+
+        # Process ekf_pose
+        x_ekf = ekf_pose_msg.pose.position.x
+        y_ekf = ekf_pose_msg.pose.position.y
+        theta_ekf = 2 * atan2(ekf_pose_msg.pose.orientation.z, ekf_pose_msg.pose.orientation.w)
+        ekf_pose = (x_ekf, y_ekf, theta_ekf)
+        Environment.update_ekf_pose(ekf_pose)
+
+        # Process LiDAR ranges
+        ranges = lidar_msg.ranges
+        Environment.lidar_data = ranges  # Store LiDAR ranges for rendering
 
     def goal_pose_callback(self, msg):
         """Update the goal position."""
-        goal= (
-            self.width // 2 + int(msg.point.x * self.scale),
-            self.height // 2 - int(msg.point.y * self.scale)
+        goal = (
+            int(msg.point.x),
+            int(msg.point.y)
         )
         Environment.update_goal(goal)
-
-    def ekf_pose_callback(self, msg):
-        """Update the robot's estimated position from EKF."""
-        self.get_logger().info(f"Received EKF pose: x={msg.pose.position.x}, y={msg.pose.position.y}")
-        x = self.width // 2 + int(msg.pose.position.x * self.scale)
-        y = self.height // 2 - int(msg.pose.position.y * self.scale)
-
-        Environment.update_ekf_pose(x, y)
 
     def render(self):
         """Render the scene."""
         # Clear the screen
         self.screen.fill((255, 255, 255))
-
         # Render the environment
-        Environment.render(self.screen)
-
+        Renderer.render(self.screen)
         # Update the display
         pygame.display.flip()
 

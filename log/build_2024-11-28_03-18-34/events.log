@@ -1,0 +1,104 @@
+[0.000000] (-) TimerEvent: {}
+[0.000122] (cherry_bot) JobQueued: {'identifier': 'cherry_bot', 'dependencies': OrderedDict()}
+[0.000153] (cherry_bot) JobStarted: {'identifier': 'cherry_bot'}
+[0.099400] (-) TimerEvent: {}
+[0.199669] (-) TimerEvent: {}
+[0.299941] (-) TimerEvent: {}
+[0.400216] (-) TimerEvent: {}
+[0.500481] (-) TimerEvent: {}
+[0.503022] (cherry_bot) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', 'build/cherry_bot', 'build', '--build-base', '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build', 'install', '--record', '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/m/Documents/GitHub/cherry_bot', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'm', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/m', 'OLDPWD': '/home/m/Documents', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '36239', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'm', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'm', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/station:@/tmp/.ICE-unix/1783,unix/station:/tmp/.ICE-unix/1783', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/f6edd47e_98c0_4838_9c4f_93303d01c2fb', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.7M72X2', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.152', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'VTE_VERSION': '6800'}, 'shell': False}
+[0.600613] (-) TimerEvent: {}
+[0.700891] (-) TimerEvent: {}
+[0.705843] (cherry_bot) StdoutLine: {'line': b'running egg_info\n'}
+[0.706266] (cherry_bot) StdoutLine: {'line': b'creating build/cherry_bot/cherry_bot.egg-info\n'}
+[0.706464] (cherry_bot) StdoutLine: {'line': b'writing build/cherry_bot/cherry_bot.egg-info/PKG-INFO\n'}
+[0.706534] (cherry_bot) StdoutLine: {'line': b'writing dependency_links to build/cherry_bot/cherry_bot.egg-info/dependency_links.txt\n'}
+[0.706686] (cherry_bot) StdoutLine: {'line': b'writing entry points to build/cherry_bot/cherry_bot.egg-info/entry_points.txt\n'}
+[0.706851] (cherry_bot) StdoutLine: {'line': b'writing requirements to build/cherry_bot/cherry_bot.egg-info/requires.txt\n'}
+[0.706921] (cherry_bot) StdoutLine: {'line': b'writing top-level names to build/cherry_bot/cherry_bot.egg-info/top_level.txt\n'}
+[0.706969] (cherry_bot) StdoutLine: {'line': b"writing manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'\n"}
+[0.708262] (cherry_bot) StdoutLine: {'line': b"reading manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'\n"}
+[0.708422] (cherry_bot) StdoutLine: {'line': b"adding license file 'LICENSE'\n"}
+[0.708810] (cherry_bot) StdoutLine: {'line': b"writing manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'\n"}
+[0.709004] (cherry_bot) StdoutLine: {'line': b'running build\n'}
+[0.709080] (cherry_bot) StdoutLine: {'line': b'running build_py\n'}
+[0.709158] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build\n'}
+[0.709206] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib\n'}
+[0.709252] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot\n'}
+[0.709299] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot\n'}
+[0.709344] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/simulation.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot\n'}
+[0.709477] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation\n'}
+[0.709550] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Navigation/GoalHandler.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation\n'}
+[0.709603] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Navigation/Navigation.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation\n'}
+[0.709653] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Navigation/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation\n'}
+[0.709727] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Navigation/Steering.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation\n'}
+[0.709777] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry\n'}
+[0.709824] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Odometry/GroundTruth.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry\n'}
+[0.709872] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Odometry/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry\n'}
+[0.709930] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Odometry/EKF.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry\n'}
+[0.709998] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment\n'}
+[0.710045] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Environment/Environment.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment\n'}
+[0.710108] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Environment/Lidar.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment\n'}
+[0.710173] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Environment/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment\n'}
+[0.710236] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Environment/Grid.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment\n'}
+[0.710305] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors\n'}
+[0.710394] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Odometry/Sensors/PoseSensor.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors\n'}
+[0.710458] (cherry_bot) StdoutLine: {'line': b'copying cherry_bot/Odometry/Sensors/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors\n'}
+[0.710794] (cherry_bot) StdoutLine: {'line': b'running install\n'}
+[0.711026] (cherry_bot) StdoutLine: {'line': b'running install_lib\n'}
+[0.711497] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot\n'}
+[0.711638] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot\n'}
+[0.711712] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation\n'}
+[0.711788] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/GoalHandler.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation\n'}
+[0.711844] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/Navigation.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation\n'}
+[0.711921] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation\n'}
+[0.711971] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/Steering.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation\n'}
+[0.712038] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry\n'}
+[0.712110] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/GroundTruth.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry\n'}
+[0.712161] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry\n'}
+[0.712228] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors\n'}
+[0.712285] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors/PoseSensor.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors\n'}
+[0.712332] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors\n'}
+[0.712397] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/EKF.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry\n'}
+[0.712445] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment\n'}
+[0.712509] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Environment.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment\n'}
+[0.712564] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Lidar.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment\n'}
+[0.712610] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment\n'}
+[0.712678] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Grid.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment\n'}
+[0.712723] (cherry_bot) StdoutLine: {'line': b'copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/simulation.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot\n'}
+[0.713093] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/__init__.py to __init__.cpython-310.pyc\n'}
+[0.713244] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/GoalHandler.py to GoalHandler.cpython-310.pyc\n'}
+[0.713613] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/Navigation.py to Navigation.cpython-310.pyc\n'}
+[0.714216] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/__init__.py to __init__.cpython-310.pyc\n'}
+[0.714325] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/Steering.py to Steering.cpython-310.pyc\n'}
+[0.714573] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/GroundTruth.py to GroundTruth.cpython-310.pyc\n'}
+[0.714979] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/__init__.py to __init__.cpython-310.pyc\n'}
+[0.715095] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors/PoseSensor.py to PoseSensor.cpython-310.pyc\n'}
+[0.715492] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors/__init__.py to __init__.cpython-310.pyc\n'}
+[0.715603] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/EKF.py to EKF.cpython-310.pyc\n'}
+[0.716204] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Environment.py to Environment.cpython-310.pyc\n'}
+[0.717562] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Lidar.py to Lidar.cpython-310.pyc\n'}
+[0.717984] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/__init__.py to __init__.cpython-310.pyc\n'}
+[0.718100] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Grid.py to Grid.cpython-310.pyc\n'}
+[0.718577] (cherry_bot) StdoutLine: {'line': b'byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/simulation.py to simulation.cpython-310.pyc\n'}
+[0.719070] (cherry_bot) StdoutLine: {'line': b'running install_data\n'}
+[0.719145] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index\n'}
+[0.719215] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index/resource_index\n'}
+[0.719264] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index/resource_index/packages\n'}
+[0.719332] (cherry_bot) StdoutLine: {'line': b'copying resource/cherry_bot -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index/resource_index/packages\n'}
+[0.719386] (cherry_bot) StdoutLine: {'line': b'copying package.xml -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot\n'}
+[0.719433] (cherry_bot) StdoutLine: {'line': b'creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot/launch\n'}
+[0.719499] (cherry_bot) StdoutLine: {'line': b'copying launch/simulation_launch.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot/launch/\n'}
+[0.719545] (cherry_bot) StdoutLine: {'line': b'running install_egg_info\n'}
+[0.720771] (cherry_bot) StdoutLine: {'line': b'Copying build/cherry_bot/cherry_bot.egg-info to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot-0.0.0-py3.10.egg-info\n'}
+[0.721321] (cherry_bot) StdoutLine: {'line': b'running install_scripts\n'}
+[0.737499] (cherry_bot) StdoutLine: {'line': b'Installing ekf_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot\n'}
+[0.737694] (cherry_bot) StdoutLine: {'line': b'Installing goals script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot\n'}
+[0.737767] (cherry_bot) StdoutLine: {'line': b'Installing nav2goal script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot\n'}
+[0.737820] (cherry_bot) StdoutLine: {'line': b'Installing noisy_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot\n'}
+[0.737925] (cherry_bot) StdoutLine: {'line': b'Installing simulation script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot\n'}
+[0.737981] (cherry_bot) StdoutLine: {'line': b'Installing true_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot\n'}
+[0.738304] (cherry_bot) StdoutLine: {'line': b"writing list of installed files to '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log'\n"}
+[0.759423] (cherry_bot) CommandEnded: {'returncode': 0}
+[0.769281] (cherry_bot) JobEnded: {'identifier': 'cherry_bot', 'rc': 0}
+[0.769987] (-) EventReactorShutdown: {}

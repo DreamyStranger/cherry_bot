@@ -5,8 +5,7 @@ from geometry_msgs.msg import PoseStamped
 from math import atan2, pi
 from .Environment import Environment
 
-
-class LiDAR(Node):
+class Lidar(Node):
     def __init__(self):
         super().__init__('LiDAR')
 
@@ -20,8 +19,8 @@ class LiDAR(Node):
         # Publisher for LiDAR scan
         self.lidar_publisher = self.create_publisher(LaserScan, 'lidar_scan', 10)
 
-        # Timer to publish LiDAR scans at regular intervals (10 Hz)
-        self.timer = self.create_timer(0.1, self.publish_lidar_scan)
+        # Timer to publish LiDAR scans at regular intervals (100 Hz)
+        self.timer = self.create_timer(0.01, self.publish_lidar_scan)
 
     def pose_callback(self, msg):
         """Update the robot's true position and orientation."""
@@ -29,7 +28,6 @@ class LiDAR(Node):
         y = msg.pose.position.y
         theta = 2 * atan2(msg.pose.orientation.z, msg.pose.orientation.w)
         self.pose = (x, y, theta)
-        self.get_logger().debug(f"Updated pose: {self.pose}")
 
     def publish_lidar_scan(self):
         """Simulate and publish a LiDAR scan."""
@@ -38,26 +36,26 @@ class LiDAR(Node):
             return
 
         # Compute LiDAR scan using the Environment class
-        ranges = Environment.simulate_lidar(self.pose, self.num_rays, self.max_range)
+        ranges = Environment.simulate_lidar(self.pose)
 
         # Populate the LaserScan message
         scan = LaserScan()
         scan.header.stamp = self.get_clock().now().to_msg()
-        scan.header.frame_id = "lidar_frame"  # Update as per your frame setup
+        scan.header.frame_id = "lidar_frame"  # Replace with a configurable parameter if needed
         scan.angle_min = -pi / 2  # Half-circle in front of the robot
         scan.angle_max = pi / 2
-        scan.angle_increment = (pi) / self.num_rays
+        scan.angle_increment = (scan.angle_max - scan.angle_min) / self.num_rays
         scan.range_min = 0.0
         scan.range_max = self.max_range
         scan.ranges = ranges
 
         # Publish the LiDAR scan
         self.lidar_publisher.publish(scan)
-        self.get_logger().debug("Published LiDAR scan.")
+        self.get_logger().debug(f"Published LiDAR scan with {len(ranges)} rays.")
 
 def main(args=None):
     rclpy.init(args=args)
-    lidar_node = LiDAR()
+    lidar_node = Lidar()
 
     try:
         rclpy.spin(lidar_node)
@@ -66,7 +64,6 @@ def main(args=None):
     finally:
         lidar_node.destroy_node()
         rclpy.shutdown()
-
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,90 @@
+running egg_info
+creating build/cherry_bot/cherry_bot.egg-info
+writing build/cherry_bot/cherry_bot.egg-info/PKG-INFO
+writing dependency_links to build/cherry_bot/cherry_bot.egg-info/dependency_links.txt
+writing entry points to build/cherry_bot/cherry_bot.egg-info/entry_points.txt
+writing requirements to build/cherry_bot/cherry_bot.egg-info/requires.txt
+writing top-level names to build/cherry_bot/cherry_bot.egg-info/top_level.txt
+writing manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+reading manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot
+copying cherry_bot/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot
+copying cherry_bot/simulation.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation
+copying cherry_bot/Navigation/GoalHandler.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation
+copying cherry_bot/Navigation/Navigation.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation
+copying cherry_bot/Navigation/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation
+copying cherry_bot/Navigation/Steering.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry
+copying cherry_bot/Odometry/GroundTruth.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry
+copying cherry_bot/Odometry/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry
+copying cherry_bot/Odometry/EKF.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+copying cherry_bot/Environment/Environment.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+copying cherry_bot/Environment/Lidar.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+copying cherry_bot/Environment/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+copying cherry_bot/Environment/Grid.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+creating /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors
+copying cherry_bot/Odometry/Sensors/PoseSensor.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors
+copying cherry_bot/Odometry/Sensors/__init__.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors
+running install
+running install_lib
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/GoalHandler.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/Navigation.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/Steering.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/GroundTruth.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors/PoseSensor.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/Sensors/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Odometry/EKF.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Environment.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Lidar.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/__init__.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Grid.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/simulation.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/GoalHandler.py to GoalHandler.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/Navigation.py to Navigation.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/Steering.py to Steering.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/GroundTruth.py to GroundTruth.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors/PoseSensor.py to PoseSensor.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/Sensors/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Odometry/EKF.py to EKF.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Environment.py to Environment.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Lidar.py to Lidar.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Grid.py to Grid.cpython-310.pyc
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/simulation.py to simulation.cpython-310.pyc
+running install_data
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index/resource_index
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index/resource_index/packages
+copying resource/cherry_bot -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/ament_index/resource_index/packages
+copying package.xml -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot
+creating /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot/launch
+copying launch/simulation_launch.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot/launch/
+running install_egg_info
+Copying build/cherry_bot/cherry_bot.egg-info to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot-0.0.0-py3.10.egg-info
+running install_scripts
+Installing ekf_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing goals script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing nav2goal script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing noisy_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing simulation script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing true_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+writing list of installed files to '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log'

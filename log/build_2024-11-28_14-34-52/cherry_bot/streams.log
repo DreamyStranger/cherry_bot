@@ -1,0 +1,34 @@
+[0.517s] Invoking command in '/home/m/Documents/GitHub/cherry_bot': PYTHONPATH=/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/cherry_bot build --build-base /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build install --record /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log --single-version-externally-managed install_data
+[0.729s] running egg_info
+[0.730s] writing build/cherry_bot/cherry_bot.egg-info/PKG-INFO
+[0.730s] writing dependency_links to build/cherry_bot/cherry_bot.egg-info/dependency_links.txt
+[0.730s] writing entry points to build/cherry_bot/cherry_bot.egg-info/entry_points.txt
+[0.730s] writing requirements to build/cherry_bot/cherry_bot.egg-info/requires.txt
+[0.730s] writing top-level names to build/cherry_bot/cherry_bot.egg-info/top_level.txt
+[0.732s] reading manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+[0.732s] adding license file 'LICENSE'
+[0.733s] writing manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+[0.733s] running build
+[0.733s] running build_py
+[0.733s] copying cherry_bot/Environment/Renderer.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+[0.734s] copying cherry_bot/Environment/Lidar.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment
+[0.734s] running install
+[0.734s] running install_lib
+[0.735s] copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Renderer.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+[0.735s] copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Environment/Lidar.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment
+[0.736s] byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Renderer.py to Renderer.cpython-310.pyc
+[0.737s] byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Environment/Lidar.py to Lidar.cpython-310.pyc
+[0.737s] running install_data
+[0.737s] running install_egg_info
+[0.739s] removing '/home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot-0.0.0-py3.10.egg-info' (and everything under it)
+[0.739s] Copying build/cherry_bot/cherry_bot.egg-info to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot-0.0.0-py3.10.egg-info
+[0.739s] running install_scripts
+[0.756s] Installing ekf_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.756s] Installing goals script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.756s] Installing lidar script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.756s] Installing nav2goal script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.756s] Installing noisy_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.757s] Installing simulation script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.757s] Installing true_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+[0.757s] writing list of installed files to '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log'
+[0.777s] Invoked command in '/home/m/Documents/GitHub/cherry_bot' returned '0': PYTHONPATH=/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/cherry_bot build --build-base /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build install --record /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log --single-version-externally-managed install_data

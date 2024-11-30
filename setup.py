@@ -29,7 +29,8 @@ setup(
             'ekf_pose = cherry_bot.Odometry.EKF:main',
             'nav2goal = cherry_bot.Navigation.Navigation:main',
             'goals = cherry_bot.Navigation.GoalHandler:main',
-            'simulation = cherry_bot.simulation:main'
+            'simulation = cherry_bot.simulation:main',
+            'lidar = cherry_bot.Environment.Lidar:main'
         ],
     }, 
 )

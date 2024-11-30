@@ -10,7 +10,29 @@ class Environment:
     scale = 100  # Default scale (pixels per meter)
 
     # Predefined walls (known map)
-    walls = []
+    wall_thickness = 0.1
+    walls = [
+            # Top wall
+            {'x': 0, 'y': 0, 'width': width, 'height': wall_thickness},
+            # Bottom wall
+            {'x': 0, 'y': height - wall_thickness, 'width': width, 'height': wall_thickness},
+            # Left wall
+            {'x': 0, 'y': 0, 'width': wall_thickness, 'height': height},
+            # Right wall
+            {'x': width - wall_thickness, 'y': 0, 'width': wall_thickness, 'height': height},
+            # Horizontal wall (center-left)
+            {'x': 0, 'y': height // 2, 'width': width // 2.5, 'height': wall_thickness},
+            # Horizontal wall (center-right)
+            {'x': 2 * width // 3, 'y': height // 2, 'width': width // 3, 'height': wall_thickness},
+            # Vertical wall (center-top)
+            {'x': width // 2, 'y': 0, 'width': wall_thickness, 'height': height // 3},
+            # Vertical wall (center-bottom)
+            {'x': width // 2, 'y': 2 * height // 3, 'width': wall_thickness, 'height': height // 3},
+            # Horizontal wall (bottom-left)
+            {'x': 0, 'y': 2 * height // 3, 'width': width // 3, 'height': wall_thickness},
+            # Vertical wall (top-right)
+            {'x': 3 * width // 4, 'y': 0, 'width': wall_thickness, 'height': height // 3},
+        ]
 
     # Predefined dynamic obstacles (unknown to the robot)
     obstacles = [
@@ -28,129 +50,32 @@ class Environment:
     ekf_path = []
 
     goal = None
+
+    lidar_range = 2
+    lidar_rays = 180
     lidar_data = []
 
     @classmethod
-    def set_dimensions(cls, width, height, scale=100):
-        """Set environment dimensions and scale."""
-        cls.width = width
-        cls.height = height
-        cls.scale = scale
-        cls.update_walls()
-
-    @classmethod
-    def update_true_pose(cls, x, y):
+    def update_true_pose(cls, pose):
         """Update the true pose of the robot."""
         if cls.true_pose:
-            cls.true_path.append(cls.true_pose)
-        cls.true_pose = (x, y)
+            cls.true_path.append(cls.true_pose[:2])
+        cls.true_pose = pose
 
     @classmethod
-    def update_ekf_pose(cls, x, y):
+    def update_ekf_pose(cls, pose):
         """Update the EKF-estimated pose of the robot."""
         if cls.ekf_pose:
-            cls.ekf_path.append(cls.ekf_pose)
-        cls.ekf_pose = (x, y)
+            cls.ekf_path.append(cls.ekf_pose[:2])
+        cls.ekf_pose = pose
 
     @classmethod
     def update_goal(cls, goal):
         """Update the goal position."""
         cls.goal = goal
-
-    @classmethod
-    def update_walls(cls):
-        """Recompute wall positions if dimensions change."""
-        cls.walls = [
-            (0, 0, cls.width, 0),
-            (0, cls.height, cls.width, cls.height),
-            (0, 0, 0, cls.height),
-            (cls.width, 0, cls.width, cls.height),
-            (0, cls.height // 2, cls.width // 2.5, cls.height // 2),
-            (2 * cls.width // 3, cls.height // 2, cls.width, cls.height // 2),
-            (cls.width // 2, 0, cls.width // 2, cls.height // 3),
-            (cls.width // 2, 2 * cls.height // 3, cls.width // 2, cls.height),
-            (0, 2 * cls.height // 3, cls.width // 3, 2 * cls.height // 3),
-            (3 * cls.width // 4, 0, 3 * cls.width // 4, cls.height // 3),
-        ]
-
-    @classmethod
-    def simulate_lidar(cls, num_rays=360, max_range=5.0):
-        """Simulate a LiDAR scan."""
-        cls.lidar_data = cls._compute_lidar_scan(num_rays, max_range)
-        return cls.lidar_data
-
-    @staticmethod
-    def _compute_lidar_scan(num_rays, max_range):
-        """Dummy method to compute LiDAR scans."""
-        return [max_range] * num_rays
-
-    @classmethod
-    def render(cls, screen):
-        """Render the environment."""
-        cls._draw_walls(screen)
-        cls._draw_obstacles(screen)
-        cls._draw_goal(screen)
-        cls._draw_paths(screen)
-        cls._draw_robots(screen)
-
-    @classmethod
-    def _draw_robots(cls, screen):
-        """Draw true and estimated locations of the robot."""
-        if cls.true_pose:
-            pygame.draw.circle(screen, (0, 0, 255), cls.true_pose, cls.robot_radius)
-        if cls.ekf_pose:
-            pygame.draw.circle(screen, (128, 0, 128), cls.ekf_pose, cls.robot_radius)
-
-    @classmethod
-    def _draw_goal(cls, screen):
-        """Draw the goal position."""
-        if cls.goal:
-            pygame.draw.circle(screen, (0, 255, 0), cls.goal, cls.robot_radius // 3)
-
-    @classmethod
-    def _draw_walls(cls, screen):
-        """Draw static walls on the screen."""
-        wall_thickness = 20  # Wall thickness in pixels
-        for x1, y1, x2, y2 in cls.walls:
-            pygame.draw.line(
-                screen, (0, 0, 0),  # Black color
-                cls._scale_point((x1, y1)),
-                cls._scale_point((x2, y2)),
-                wall_thickness
-            )
-
-    @classmethod
-    def _draw_obstacles(cls, screen):
-        """Draw dynamic obstacles as black rectangles."""
-        for obstacle in cls.obstacles:
-            rect = pygame.Rect(
-                obstacle['x'] * cls.scale,
-                obstacle['y'] * cls.scale,
-                obstacle['width'] * cls.scale,
-                obstacle['height'] * cls.scale
-            )
-            pygame.draw.rect(screen, (0, 0, 0), rect)
-
-    @classmethod
-    def _draw_paths(cls, screen):
-        """Draw the paths of the true and EKF poses."""
-        if len(cls.true_path) > 1:
-            pygame.draw.lines(
-                screen, (0, 0, 255), False, [p for p in cls.true_path], 3
-            )
-        if len(cls.ekf_path) > 1:
-            pygame.draw.lines(
-                screen, (128, 0, 128), False, [p for p in cls.ekf_path], 3
-            )
-
-    @classmethod
-    def _scale_point(cls, point):
-        """Scale a point from meters to pixels."""
-        x, y = point
-        return int(x * cls.scale), int(y * cls.scale)
     
     @classmethod
-    def simulate_lidar(cls, pose, num_rays=180, max_range=5.0, noise_std=0.01):
+    def simulate_lidar(cls, pose, noise_std=0.01):
         """
         Simulate LiDAR rays from the given pose.
         :param pose: The true pose of the robot (x, y, theta).
@@ -159,9 +84,21 @@ class Environment:
         :param noise_std: Standard deviation of Gaussian noise to add to distances.
         :return: List of distances for each ray (with noise).
         """
-        x, y, theta = pose
-        angles = cls._compute_ray_angles(theta, num_rays)
         distances = []
+        num_rays = cls.lidar_rays
+        max_range = cls.lidar_range + 0.5
+
+        if not pose:
+            return distances
+        
+        # Apply the environment shift (if robot is centered on the screen)
+        x, y, theta = pose
+        x += cls.width // 2 # Shift horizontally
+        y += cls.height // 2 # Shift vertically
+
+        # Compute angles for the rays
+        angles = cls._compute_ray_angles(theta, num_rays)
+        
 
         for angle in angles:
             # Check for collisions and compute the intersection distance
@@ -170,7 +107,9 @@ class Environment:
             distance_with_noise = max(0, distance + random.gauss(0, noise_std))
             distances.append(distance_with_noise)
 
+        cls.lidar_data = distances
         return distances
+
 
     @staticmethod
     def _compute_ray_angles(theta, num_rays):
@@ -195,39 +134,39 @@ class Environment:
         x2 = x1 + max_range * math.cos(angle)
         y2 = y1 + max_range * math.sin(angle)
 
-        min_distance = max_range
+        min_distance = max_range + 0.5
 
-        # Check intersections with walls
+        # Check intersections with walls (treated as rectangles)
         for wall in cls.walls:
-            intersection = cls._check_ray_wall_collision((x1, y1), (x2, y2), wall)
-            if intersection:
-                distance = math.hypot(intersection[0] - x1, intersection[1] - y1)
-                min_distance = min(min_distance, distance)
+            wall_distance = cls._check_ray_rectangle_collision((x1, y1), (x2, y2), wall)
+            if wall_distance:
+                min_distance = min(min_distance, wall_distance)
 
-        # Check intersections with obstacles
+        # Check intersections with obstacles (also rectangles)
         for obstacle in cls.obstacles:
-            obstacle_distance = cls._check_ray_obstacle_collision((x1, y1), (x2, y2), obstacle)
+            obstacle_distance = cls._check_ray_rectangle_collision((x1, y1), (x2, y2), obstacle)
             if obstacle_distance:
                 min_distance = min(min_distance, obstacle_distance)
 
         return min_distance
 
+
     @staticmethod
-    def _check_ray_wall_collision(ray_start, ray_end, wall):
+    def _check_ray_line_collision(ray_start, ray_end, line_segment):
         """
-        Check if a ray intersects with a wall and return the intersection point.
+        Check if a ray intersects with a line segment.
         :param ray_start: Start of the ray (x1, y1).
         :param ray_end: End of the ray (x2, y2).
-        :param wall: Wall as a line segment (x3, y3, x4, y4).
+        :param line_segment: Line segment as (x3, y3, x4, y4).
         :return: Intersection point (xi, yi) or None if no intersection.
         """
         x1, y1 = ray_start
         x2, y2 = ray_end
-        x3, y3, x4, y4 = wall
+        x3, y3, x4, y4 = line_segment
 
         # Compute intersection using line equations
         denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
-        if denominator == 0:  # Parallel lines
+        if abs(denominator) < 1e-6:  # Parallel or coincident lines
             return None
 
         t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denominator
@@ -242,15 +181,15 @@ class Environment:
         return None
 
     @staticmethod
-    def _check_ray_obstacle_collision(ray_start, ray_end, obstacle):
+    def _check_ray_rectangle_collision(ray_start, ray_end, rect):
         """
-        Check if a ray intersects with a rectangular obstacle.
+        Check if a ray intersects with a rectangular region.
         :param ray_start: Start of the ray (x1, y1).
         :param ray_end: End of the ray (x2, y2).
-        :param obstacle: Obstacle as a dictionary {'x', 'y', 'width', 'height'}.
-        :return: Distance to the obstacle or None if no intersection.
+        :param rect: Rectangle as a dictionary {'x', 'y', 'width', 'height'}.
+        :return: Distance to the rectangle or None if no intersection.
         """
-        x, y, width, height = obstacle['x'], obstacle['y'], obstacle['width'], obstacle['height']
+        x, y, width, height = rect['x'], rect['y'], rect['width'], rect['height']
         corners = [
             (x, y),  # Bottom-left
             (x + width, y),  # Bottom-right
@@ -259,38 +198,19 @@ class Environment:
         ]
 
         edges = [
-            (corners[0], corners[1]),
-            (corners[1], corners[2]),
-            (corners[2], corners[3]),
-            (corners[3], corners[0])
+            (corners[0][0], corners[0][1], corners[1][0], corners[1][1]),  # Bottom edge
+            (corners[1][0], corners[1][1], corners[2][0], corners[2][1]),  # Right edge
+            (corners[2][0], corners[2][1], corners[3][0], corners[3][1]),  # Top edge
+            (corners[3][0], corners[3][1], corners[0][0], corners[0][1])   # Left edge
         ]
 
         min_distance = None
         for edge in edges:
-            intersection = Environment._check_ray_wall_collision(ray_start, ray_end, edge)
+            intersection = Environment._check_ray_line_collision(ray_start, ray_end, edge)
             if intersection:
                 distance = math.hypot(intersection[0] - ray_start[0], intersection[1] - ray_start[1])
                 if min_distance is None or distance < min_distance:
                     min_distance = distance
 
         return min_distance
-    
-    @classmethod
-    def render_lidar(cls, screen, ekf_pose, lidar_data):
-        """
-        Render LiDAR rays on the screen.
-        :param screen: Pygame screen for rendering.
-        :param ekf_pose: EKF-estimated pose (scaled, (x, y, theta)).
-        :param lidar_data: List of distances for each ray.
-        """
-        x, y, theta = ekf_pose  # EKF pose as starting point
-        angles = np.linspace(-math.pi / 2, math.pi / 2, len(lidar_data)) + theta  # Global angles for rays
-
-        for i, distance in enumerate(lidar_data):
-            # Compute end point of the ray
-            x_end = x + distance * math.cos(angles[i]) * cls.scale
-            y_end = y + distance * math.sin(angles[i]) * cls.scale
-
-            # Draw the ray as a line
-            pygame.draw.line(screen, (255, 0, 0), (x, y), (x_end, y_end), 1)
 

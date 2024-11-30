@@ -1,0 +1,31 @@
+running egg_info
+writing build/cherry_bot/cherry_bot.egg-info/PKG-INFO
+writing dependency_links to build/cherry_bot/cherry_bot.egg-info/dependency_links.txt
+writing entry points to build/cherry_bot/cherry_bot.egg-info/entry_points.txt
+writing requirements to build/cherry_bot/cherry_bot.egg-info/requires.txt
+writing top-level names to build/cherry_bot/cherry_bot.egg-info/top_level.txt
+reading manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'build/cherry_bot/cherry_bot.egg-info/SOURCES.txt'
+running build
+running build_py
+copying cherry_bot/Navigation/VFH.py -> /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation
+running install
+running install_lib
+copying /home/m/Documents/GitHub/cherry_bot/build/cherry_bot/build/lib/cherry_bot/Navigation/VFH.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation
+byte-compiling /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot/Navigation/VFH.py to VFH.cpython-310.pyc
+running install_data
+copying launch/simulation_launch.py -> /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/share/cherry_bot/launch/
+running install_egg_info
+removing '/home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot-0.0.0-py3.10.egg-info' (and everything under it)
+Copying build/cherry_bot/cherry_bot.egg-info to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/python3.10/site-packages/cherry_bot-0.0.0-py3.10.egg-info
+running install_scripts
+Installing ekf_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing goals script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing lidar script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing nav2goal script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing noisy_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing simulation script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing true_pose script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+Installing vfh script to /home/m/Documents/GitHub/cherry_bot/install/cherry_bot/lib/cherry_bot
+writing list of installed files to '/home/m/Documents/GitHub/cherry_bot/build/cherry_bot/install.log'

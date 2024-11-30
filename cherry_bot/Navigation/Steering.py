@@ -12,8 +12,9 @@ class SteeringController:
         """
         self._K_h = K_h
         self.max_steering = max_steering
+        self.goal = None
 
-    def compute(self, goal, pose):
+    def compute(self, pose):
         """
         Computes the steering command based on the current pose and the goal position.
 
@@ -24,8 +25,11 @@ class SteeringController:
         Returns:
             float: Steering angle command (radians), constrained by max_steering.
         """
+        if self.goal is None:
+            return 0.0
+        
         # Calculate the desired orientation towards the goal
-        desired_theta = atan2(goal[1] - pose[1], goal[0] - pose[0])
+        desired_theta = atan2(self.goal[1] - pose[1], self.goal[0] - pose[0])
 
         # Calculate the steering angle (error in orientation)
         steering = desired_theta - pose[2]
@@ -35,6 +39,9 @@ class SteeringController:
         steering = np.sign(steering) * min(abs(steering), self.max_steering)
 
         return steering
+    
+    def set_goal(self, goal_x, goal_y):
+        self.goal = (goal_x, goal_y)
 
     def set_gains(self, K_steering):
         """
