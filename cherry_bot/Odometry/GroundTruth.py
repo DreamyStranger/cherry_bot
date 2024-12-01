@@ -2,6 +2,9 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Twist
+
+from cherry_bot.globals import true_pose_rate
+
 import math
 
 class TruePose(Node):
@@ -21,8 +24,8 @@ class TruePose(Node):
         self.linear_velocity = 0.0  # Initial linear velocity (m/s)
         self.angular_velocity = 0.0  # Initial angular velocity (rad/s)
 
-        # Timer to publish ground truth at 100 Hz (0.01 seconds)
-        self.timer = self.create_timer(0.01, self.publish_ground_truth)
+        # Timer to publish ground truth 
+        self.timer = self.create_timer(true_pose_rate, self.publish_ground_truth)
 
     def cmd_vel_callback(self, msg):
         """Update the robot's true velocities from cmd_vel messages."""
@@ -31,7 +34,7 @@ class TruePose(Node):
 
     def publish_ground_truth(self):
         """Calculate and publish the robot's ground truth pose."""
-        delta_t = 0.01  # Time step (100 Hz)
+        delta_t = true_pose_rate 
         
         # Update position based on velocities
         self.x += self.linear_velocity * math.cos(self.theta) * delta_t

@@ -3,6 +3,7 @@ import numpy as np
 import math
 import random
 
+from cherry_bot.globals import goal_x, goal_y
 class Environment:
     # Class variables
     width = 8  # Default width in meters
@@ -43,13 +44,12 @@ class Environment:
         {'x': 7, 'y': 1, 'width': 0.5, 'height': 1},
     ]
 
-    robot_radius = 10
     true_pose = ()
     ekf_pose = ()
     true_path = []
     ekf_path = []
 
-    goal = None
+    goal = (goal_x, goal_y)
 
     lidar_range = 2
     lidar_rays = 180
@@ -80,7 +80,6 @@ class Environment:
         Simulate LiDAR rays from the given pose.
         :param pose: The true pose of the robot (x, y, theta).
         :param num_rays: Number of rays (default: 180 for half-circle).
-        :param max_range: Maximum range of the LiDAR (default: 5 meters).
         :param noise_std: Standard deviation of Gaussian noise to add to distances.
         :return: List of distances for each ray (with noise).
         """

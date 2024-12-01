@@ -30,7 +30,9 @@ setup(
             'nav2goal = cherry_bot.Navigation.Navigation:main',
             'goals = cherry_bot.Navigation.GoalHandler:main',
             'simulation = cherry_bot.simulation:main',
-            'lidar = cherry_bot.Environment.Lidar:main'
+            'lidar = cherry_bot.Environment.Lidar:main',
+            'grid = cherry_bot.Environment.Grid:main',
+            'tf = cherry_bot.Transform.Transform:main',
         ],
     }, 
 )

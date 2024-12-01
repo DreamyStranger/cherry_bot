@@ -4,12 +4,13 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import PoseStamped
 from math import atan2, pi
 from .Environment import Environment
+from cherry_bot.globals import lidar_rate
 
 class Lidar(Node):
     def __init__(self):
         super().__init__('LiDAR')
 
-        self.pose = None  # Robot's true pose (x, y, theta)
+        self.pose = (0, 0, 0)  # Robot's true pose (x, y, theta)
         self.num_rays = 180  # Number of LiDAR rays
         self.max_range = 2.0  # Maximum LiDAR range in meters
 
@@ -20,7 +21,7 @@ class Lidar(Node):
         self.lidar_publisher = self.create_publisher(LaserScan, 'lidar_scan', 10)
 
         # Timer to publish LiDAR scans at regular intervals (100 Hz)
-        self.timer = self.create_timer(0.01, self.publish_lidar_scan)
+        self.timer = self.create_timer(lidar_rate, self.publish_lidar_scan)
 
     def pose_callback(self, msg):
         """Update the robot's true position and orientation."""
@@ -41,7 +42,7 @@ class Lidar(Node):
         # Populate the LaserScan message
         scan = LaserScan()
         scan.header.stamp = self.get_clock().now().to_msg()
-        scan.header.frame_id = "lidar_frame"  # Replace with a configurable parameter if needed
+        scan.header.frame_id = "base_link"  # Replace with a configurable parameter if needed
         scan.angle_min = -pi / 2  # Half-circle in front of the robot
         scan.angle_max = pi / 2
         scan.angle_increment = (scan.angle_max - scan.angle_min) / self.num_rays

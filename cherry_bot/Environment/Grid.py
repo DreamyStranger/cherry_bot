@@ -1,104 +1,159 @@
+import numpy as np
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
-from geometry_msgs.msg import Pose
-import numpy as np
+from std_msgs.msg import Header
+from geometry_msgs.msg import PoseStamped
+from sensor_msgs.msg import LaserScan
+from message_filters import Subscriber, ApproximateTimeSynchronizer
 
 class MapPublisher(Node):
     def __init__(self):
         super().__init__('map_publisher')
 
-        # Parameters for map dimensions and resolution
-        self.map_width = 800  # In cells (8 meters, assuming 1 cm resolution)
-        self.map_height = 600  # In cells (6 meters, assuming 1 cm resolution)
+        # Map configuration
+        self.width = 800  # Map width in cells
+        self.height = 600  # Map height in cells
         self.resolution = 0.01  # 1 cm per cell
-        self.map_update_rate = 1.0  # Publish map every 1 second
+        self.log_odds = np.zeros((self.height, self.width), dtype=np.float32)  # Log-odds map
 
-        # Initialize the map (static walls + dynamic obstacles placeholder)
-        self.static_map = self.initialize_static_map()
-        self.dynamic_obstacles = []  # List of dynamic obstacles [(x, y), ...]
+        # Log odds parameters
+        self.log_free = -0.4  # Decrease log-odds for free cells
+        self.log_occ = 0.85   # Increase log-odds for occupied cells
+        self.min_log = -5.0   # Minimum log-odds (strong belief in free)
+        self.max_log = 5.0    # Maximum log-odds (strong belief in occupied)
 
-        # Publisher for OccupancyGrid
-        self.map_publisher = self.create_publisher(OccupancyGrid, 'map', 10)
+        # Publishers
+        self.map_pub = self.create_publisher(OccupancyGrid, 'map', 10)
 
-        # Timer to publish map periodically
-        self.create_timer(self.map_update_rate, self.publish_map)
+        # Subscribers for synchronized EKF pose and LiDAR scan
+        self.ekf_sub = Subscriber(self, PoseStamped, 'ekf_pose')
+        self.lidar_sub = Subscriber(self, LaserScan, 'lidar_scan')
+        self.sync = ApproximateTimeSynchronizer(
+            [self.ekf_sub, self.lidar_sub],
+            queue_size=10,
+            slop=0.1
+        )
+        self.sync.registerCallback(self.update_map)
 
-    def initialize_static_map(self):
-        """Initialize the static part of the map with walls."""
-        grid = np.zeros((self.map_height, self.map_width), dtype=np.int8)
+        # Timer to publish the map periodically
+        self.create_timer(1.0, self.publish_map)
 
-        # Create static walls
-        # Top and bottom walls
-        grid[0, :] = 100
-        grid[-1, :] = 100
-        # Left and right walls
-        grid[:, 0] = 100
-        grid[:, -1] = 100
+    def update_map(self, ekf_pose, lidar_scan):
+        """
+        Update the occupancy grid map using EKF pose and LiDAR data.
+        """
+        # Convert EKF pose from odom frame to map frame
+        robot_x = ekf_pose.pose.position.x + (self.width * self.resolution / 2)
+        robot_y = ekf_pose.pose.position.y + (self.height * self.resolution / 2)
 
-        return grid
+        # Extract robot orientation (theta) from quaternion
+        qz = ekf_pose.pose.orientation.z
+        qw = ekf_pose.pose.orientation.w
+        robot_theta = 2 * np.arctan2(qz, qw)  # Robot orientation in radians
 
-    def update_dynamic_obstacles(self):
-        """Add dynamic obstacles to the static map."""
-        # Create a copy of the static map
-        updated_map = self.static_map.copy()
+        # Process LiDAR data
+        angle_min = lidar_scan.angle_min
+        angle_increment = lidar_scan.angle_increment
+        lidar_ranges = lidar_scan.ranges
+        max_range = lidar_scan.range_max
 
-        # Add dynamic obstacles
-        for obstacle in self.dynamic_obstacles:
-            x, y = obstacle
-            # Convert real-world coordinates to grid indices
-            col = int((x + self.map_width * self.resolution / 2) / self.resolution)
-            row = int((y + self.map_height * self.resolution / 2) / self.resolution)
-            if 0 <= row < self.map_height and 0 <= col < self.map_width:
-                updated_map[row, col] = 100  # Mark as occupied
+        for i, distance in enumerate(lidar_ranges):
+            if distance > max_range or distance <= 0.0:
+                continue  # Ignore invalid ranges
 
-        return updated_map
+            # Compute the global angle of the LIDAR ray
+            angle = robot_theta + (angle_min + i * angle_increment)
+
+            # Calculate the coordinates of the LIDAR hit
+            hit_x = robot_x + distance * np.cos(angle)
+            hit_y = robot_y + distance * np.sin(angle)
+
+            # Convert robot position and hit point to grid coordinates
+            robot_grid_x = int(robot_x / self.resolution)
+            robot_grid_y = int(robot_y / self.resolution)
+            grid_x = int(hit_x / self.resolution)
+            grid_y = int(hit_y / self.resolution)
+
+            # Use Bresenham's line algorithm to mark free cells along the ray
+            free_cells = self.bresenham(robot_grid_x, robot_grid_y, grid_x, grid_y)
+            for fx, fy in free_cells:
+                if 0 <= fx < self.width and 0 <= fy < self.height:
+                    self.log_odds[fy, fx] = max(self.min_log, self.log_odds[fy, fx] + self.log_free)
+
+            # Mark the hit cell as occupied
+            if 0 <= grid_x < self.width and 0 <= grid_y < self.height:
+                self.log_odds[grid_y, grid_x] = min(self.max_log, self.log_odds[grid_y, grid_x] + self.log_occ)
+
+    def bresenham(self, x0, y0, x1, y1):
+        """
+        Bresenham's Line Algorithm to compute grid cells along a line.
+        """
+        cells = []
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
+        sx = 1 if x0 < x1 else -1
+        sy = 1 if y0 < y1 else -1
+        err = dx - dy
+
+        while True:
+            cells.append((x0, y0))
+            if x0 == x1 and y0 == y1:
+                break
+            e2 = err * 2
+            if e2 > -dy:
+                err -= dy
+                x0 += sx
+            if e2 < dx:
+                err += dx
+                y0 += sy
+
+        return cells
 
     def publish_map(self):
-        """Publish the OccupancyGrid map."""
-        # Update the map with dynamic obstacles
-        final_map = self.update_dynamic_obstacles()
+        """
+        Publish the updated occupancy grid map.
+        """
+        grid = OccupancyGrid()
 
-        # Create the OccupancyGrid message
-        msg = OccupancyGrid()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = "map"
-        msg.info.resolution = self.resolution
-        msg.info.width = self.map_width
-        msg.info.height = self.map_height
+        # Fill in the header
+        grid.header = Header()
+        grid.header.stamp = self.get_clock().now().to_msg()
+        grid.header.frame_id = 'map'
 
-        # Align the origin to center the robot (0, 0) on the map
-        msg.info.origin = Pose()
-        msg.info.origin.position.x = -self.map_width * self.resolution / 2
-        msg.info.origin.position.y = -self.map_height * self.resolution / 2
-        msg.info.origin.position.z = 0.0
-        msg.info.origin.orientation.w = 1.0  # No rotation
+        # Fill in the map metadata
+        grid.info.resolution = self.resolution  # meters per cell
+        grid.info.width = self.width
+        grid.info.height = self.height
 
-        # Flatten the map and assign it to the OccupancyGrid data
-        msg.data = final_map.flatten().tolist()
-        self.map_publisher.publish(msg)
+        # Origin of the map
+        grid.info.origin.position.x = 0.0
+        grid.info.origin.position.y = 0.0
+        grid.info.origin.position.z = 0.0
+        grid.info.origin.orientation.w = 1.0
 
-        self.get_logger().info('Published updated map')
+        # Convert log odds to probabilities and assign to map data
+        probabilities = 1 - 1 / (1 + np.exp(self.log_odds))  # Convert log odds to [0, 1]
+        self.map_data = (probabilities * 100).astype(np.int8)  # Scale to [0, 100]
+        grid.data = np.flipud(self.map_data).flatten().tolist()
 
-    def add_dynamic_obstacle(self, x, y):
-        """Add a dynamic obstacle to the map."""
-        self.dynamic_obstacles.append((x, y))
+        # Publish the map
+        self.map_pub.publish(grid)
+        self.get_logger().info('Published updated occupancy grid map.')
+
 
 def main(args=None):
     rclpy.init(args=args)
     map_publisher = MapPublisher()
 
-    # Example: Add some dynamic obstacles
-    #map_publisher.add_dynamic_obstacle(1.0, 1.0)  # At (1.0, 1.0) meters
-    #map_publisher.add_dynamic_obstacle(-2.0, 0.5)  # At (-2.0, 0.5) meters
-
     try:
         rclpy.spin(map_publisher)
     except KeyboardInterrupt:
-        print("Map Publisher stopped by user")
+        print("MapPublisher interrupted.")
     finally:
         map_publisher.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

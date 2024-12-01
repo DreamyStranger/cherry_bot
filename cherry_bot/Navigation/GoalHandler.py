@@ -1,32 +1,54 @@
 import rclpy
 from rclpy.node import Node
-from geometry_msgs.msg import PointStamped
+from std_msgs.msg import Float32MultiArray  # Use Float32MultiArray for lists of floats
+from cherry_bot.Environment.Environment import Environment
+
+from cherry_bot.Navigation.Astar import AStarPathPlanner
+from cherry_bot.globals import goal_x, goal_y
+
 
 class GoalHandler(Node):
     def __init__(self):
         super().__init__('goals')
 
-        # Publisher for the goal
-        self.goal_publisher = self.create_publisher(PointStamped, 'goals', 10)
-
-        # Timer to periodically publish the goal (e.g., every 5 seconds)
-        self.timer = self.create_timer(5.0, self.publish_goal)
+        # Publisher for the combined x and y coordinates
+        self.path_publisher = self.create_publisher(Float32MultiArray, 'goals', 10)
 
         # Predefined goal (in meters)
-        self.goal_x = -3.0
-        self.goal_y = -2.0
+        self.goal_x = goal_x + Environment.width / 2
+        self.goal_y = goal_y + Environment.height / 2
 
-    def publish_goal(self):
-        """Publish the predefined goal."""
-        goal_msg = PointStamped()
-        goal_msg.header.stamp = self.get_clock().now().to_msg()
-        goal_msg.header.frame_id = 'map'  # Frame of reference for the goal
-        goal_msg.point.x = self.goal_x
-        goal_msg.point.y = self.goal_y
-        goal_msg.point.z = 0.0  # Assuming a 2D plane
+        # Initialize A* path planner
+        self.planner = AStarPathPlanner()
 
-        self.goal_publisher.publish(goal_msg)
-        self.get_logger().info(f"Published goal: x={self.goal_x}, y={self.goal_y}")
+        # Current robot position (for simplicity, assume a known start position)
+        self.start_x = Environment.width / 2
+        self.start_y = Environment.height / 2
+
+        # Timer to wait for 4 seconds before publishing the path
+        self.timer = self.create_timer(2.0, self.publish_path)
+
+    def publish_path(self):
+        """Generate the path using A* and publish it as a combined list of x and y coordinates."""
+        self.timer.cancel()  # Cancel the timer after publishing the path
+
+        path = self.planner.find_path(self.start_x, self.start_y, self.goal_x, self.goal_y)
+
+        if path:
+            # Flatten the path into a single list: [x1, y1, x2, y2, ...]
+            combined_path = [coord for point in path for coord in point]
+
+            # Create Float32MultiArray message
+            path_msg = Float32MultiArray()
+            path_msg.data = combined_path
+
+            # Publish the path
+            self.path_publisher.publish(path_msg)
+
+            self.get_logger().info(f"Published path with {len(path)} waypoints.")
+        else:
+            self.get_logger().warn("No path found to the goal.")
+
 
 def main(args=None):
     rclpy.init(args=args)
@@ -39,6 +61,7 @@ def main(args=None):
     finally:
         goal_handler.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

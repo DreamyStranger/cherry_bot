@@ -1,8 +1,10 @@
-import numpy as np
-import math
+import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped, Twist
-import rclpy
+
+from cherry_bot.globals import ekf_rate
+
+import numpy as np
 
 class EKF(Node):
     def __init__(self):
@@ -27,7 +29,7 @@ class EKF(Node):
         self.create_subscription(PoseStamped, 'noisy_pose', self.noisy_pose_callback, 10)
 
         # Timer for fixed-rate prediction (100 Hz)
-        self.create_timer(0.01, self.fixed_rate_predict)
+        self.create_timer(ekf_rate, self.fixed_rate_predict)
 
         # Publisher for EKF pose
         self.pose_publisher = self.create_publisher(PoseStamped, 'ekf_pose', 10)
@@ -52,7 +54,7 @@ class EKF(Node):
 
     def fixed_rate_predict(self):
         """Fixed-rate prediction step based on velocities."""
-        delta_t = 0.01  # Time step for 100 Hz
+        delta_t = ekf_rate  # Time step
         self.predict(self.v, self.w, delta_t)
 
     def predict(self, v, w, delta_t):
@@ -75,31 +77,27 @@ class EKF(Node):
         
         # Update state and covariance
         self.state += f
+        self.state[2] = (self.state[2] + np.pi) % (2 * np.pi) - np.pi # Normalize angle, just in case
         self.P = A @ self.P @ A.T + self.Q
 
     def correct_pose(self, pose_measurement):
         """Correction step using PoseStamped data."""
-        # Measurement matrix H for pose (measures x, y, and theta)
         H = np.array([
             [1, 0, 0],  # x position
             [0, 1, 0],  # y position
             [0, 0, 1]   # theta (orientation)
         ])
         
-        # Innovation (residual) between actual and predicted measurements
         y = pose_measurement - H @ self.state
+        y[2] = (y[2] + np.pi) % (2 * np.pi) - np.pi  # Normalize theta residual
         
-        # Innovation covariance
         S = H @ self.P @ H.T + self.R_pose
-        
-        # Kalman Gain
         K = self.P @ H.T @ np.linalg.inv(S)
         
-        # Update the state with measurement
         self.state = self.state + K @ y
-        
-        # Update the covariance
+        self.state[2] = (self.state[2] + np.pi) % (2 * np.pi) - np.pi  # Normalize theta
         self.P = (np.eye(3) - K @ H) @ self.P
+        self.P = (self.P + self.P.T) / 2  # Ensure symmetry
 
     def publish_pose(self):
         """Publish the EKF's estimated state as a PoseStamped message."""
@@ -111,8 +109,8 @@ class EKF(Node):
         pose_msg.pose.position.z = 0.0  # Assuming 2D
         
         # Populate orientation (convert theta to quaternion)
-        pose_msg.pose.orientation.z = math.sin(self.state[2] / 2.0)
-        pose_msg.pose.orientation.w = math.cos(self.state[2] / 2.0)
+        pose_msg.pose.orientation.z = np.sin(self.state[2] / 2.0)
+        pose_msg.pose.orientation.w = np.cos(self.state[2] / 2.0)
         
         # Set the header with timestamp and frame_id
         pose_msg.header.stamp = self.get_clock().now().to_msg()

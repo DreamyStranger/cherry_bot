@@ -3,6 +3,7 @@ import numpy as np
 import math
 import random
 from .Environment import Environment
+from cherry_bot.globals import robot_radius
 
 class Renderer:
     @classmethod
@@ -60,13 +61,13 @@ class Renderer:
             # Scale and shift true pose
             x = screen_width // 2 + int(Environment.true_pose[0] * Environment.scale)
             y = screen_height // 2 + int(Environment.true_pose[1] * Environment.scale)
-            pygame.draw.circle(screen, (0, 0, 255), (x, y), Environment.robot_radius)
+            pygame.draw.circle(screen, (0, 0, 255), (x, y), robot_radius * Environment.scale)
 
         if Environment.ekf_pose:
             # Scale and shift EKF pose
             x = screen_width // 2 + int(Environment.ekf_pose[0] * Environment.scale)
             y = screen_height // 2 + int(Environment.ekf_pose[1] * Environment.scale)
-            pygame.draw.circle(screen, (128, 0, 128), (x, y), Environment.robot_radius)
+            pygame.draw.circle(screen, (128, 0, 128), (x, y), robot_radius * Environment.scale)
 
     @classmethod
     def _draw_paths(cls, screen):
@@ -101,7 +102,7 @@ class Renderer:
             # Scale and shift goal position
             x = screen.get_width() // 2 + int(Environment.goal[0] * Environment.scale)
             y = screen.get_height() // 2 + int(Environment.goal[1] * Environment.scale)
-            pygame.draw.circle(screen, (0, 255, 0), (x, y), Environment.robot_radius // 3)
+            pygame.draw.circle(screen, (0, 255, 0), (x, y), robot_radius * Environment.scale // 3)
 
     @classmethod
     def _draw_walls(cls, screen):

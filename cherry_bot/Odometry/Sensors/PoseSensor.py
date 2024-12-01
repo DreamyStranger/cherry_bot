@@ -1,6 +1,9 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped
+
+from cherry_bot.globals import noisy_pose_rate
+
 import numpy as np
 
 class PoseSensor(Node):
@@ -22,8 +25,7 @@ class PoseSensor(Node):
         self.latest_y = 0.0
         self.latest_theta = 0.0
 
-        # Timer for publishing pose at 100 Hz (0.01 seconds)
-        self.timer = self.create_timer(0.01, self.publish_pose_data)
+        self.timer = self.create_timer(noisy_pose_rate, self.publish_pose_data)
 
     def odom_callback(self, msg):
         # Update the latest ground truth position and orientation from PoseStamped
@@ -36,6 +38,7 @@ class PoseSensor(Node):
         noisy_x = self.latest_x + np.random.normal(0, self.position_noise_stddev)
         noisy_y = self.latest_y + np.random.normal(0, self.position_noise_stddev)
         noisy_theta = self.latest_theta + np.random.normal(0, self.orientation_noise_stddev)
+        noisy_theta = (noisy_theta + np.pi) % (2 * np.pi) - np.pi
 
         # Create a PoseStamped message
         pose_msg = PoseStamped()
@@ -55,7 +58,6 @@ class PoseSensor(Node):
 
         # Publish the noisy pose
         self.publisher.publish(pose_msg)
-        #self.get_logger().info(f'Published Pose: x={noisy_x:.3f}, y={noisy_y:.3f}, theta={noisy_theta:.3f}')
 
 def main(args=None):
     rclpy.init(args=args)
